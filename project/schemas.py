@@ -31,8 +31,8 @@ class UserLogin(BaseModel):
 
 class Token(BaseModel):
     access_token: str
-    token_type: str
-    #customerid: str
+    user_id: str
+    #cus_id: str
 
 
 class TokenData(BaseModel):

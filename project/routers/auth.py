@@ -3,7 +3,7 @@ from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from project import database, schemas, models, utils, oauth2
 #from app.database import get_db
-
+from project.routers.user import read_users_me
 
 router = APIRouter(tags=['Authentication'])
 
@@ -28,8 +28,11 @@ async def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Ses
 
 
 
-    #customerid = user.cus_id not working
+    #printing in backend only
+    print(user.cus_id)
+    #await read_users_me(user.cus_id)
 
     # return token
     access_token = oauth2.create_access_token(data= {"user_id": user.id})
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "user_id": f"{user.cus_id}"}
+

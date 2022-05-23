@@ -165,23 +165,3 @@ async def updatefromuser(id: str, updatepost: schemas.UserDash, db: Session = De
         print("not authroized")
         return {"Unauthorized"}
 #------------------------------- trails underneath---
-
-@router.get("/dashboards", response_model=List[schemas.UserDash])
-async def userid(db: Session = Depends(get_db), current_user: str = Depends(oauth2.get_current_user)):
-    print(current_user.cus_id)
-    # cursor.execute(""""SELECT * FROM post """)
-    #'''cursor.execute("""SELECT * FROM post""")z
-    #posti = cursor.fetchall()
-    #print(posti)'''
-    #product = db.query(models.Customer).filter(models.Customer.cus_fname.contains(search), models.Customer.cus_fname == current_user.cus_fname).limit(limit).offset(skip).all()
-    #product = db.query(models.Product).all()
-    print("hello")
-
-
-@router.get("/dash")
-async def read_users_me(cus: schemas.ShowCusid, current_user: str = Depends(oauth2.get_current_user), db: Session = Depends(get_db)):
-    #print(current_user.user.id)
-    cus = current_user
-    print(cus)
-
-    return cus
