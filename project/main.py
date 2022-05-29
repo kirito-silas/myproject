@@ -9,6 +9,7 @@ from project.database import database
 from project.seller import login, authseller
 from project.productspage import product
 from project.adminlog import admin,authadmin
+from project.orders import order
 
 app = FastAPI()
 
@@ -36,6 +37,7 @@ app.include_router(admin.router)
 app.include_router(authadmin.router)
 #-------------
 app.include_router(product.router)
+app.include_router(order.router)
 
 @app.on_event('startup')
 async def startup():

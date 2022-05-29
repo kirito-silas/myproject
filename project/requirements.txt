@@ -124,3 +124,5 @@ uvicorn==0.17.6
 Werkzeug==2.1.1
 yagmail==0.15.277
 zipp==3.8.0
+python-multipart
+databases

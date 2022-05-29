@@ -126,7 +126,25 @@ class UserDash(BaseModel):
 
     class Config:
         orm_mode = True
-class ShowCusid(BaseModel):
+#class ShowCusid(BaseModel):
+#    cus_id: str
+#    class Config:
+#        orm_mode = True
+#-----------------------------order----------
+class Order(BaseModel):
+    #order_id :str
     cus_id: str
+    product_id: str
+    product_name: str
+    o_qty: int
+    p_price:  int
+    order_verified: str
+    discount_amt: int
+    delivery_charge : int
+    total: int
+
     class Config:
         orm_mode = True
+
+class OrId(BaseModel):
+    order_id: str

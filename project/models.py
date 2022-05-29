@@ -91,7 +91,8 @@ class Customer(Base):
 
 class Order(Base):
     __tablename__ = "order"
-    order_id = Column(String, Sequence("auto_order"), primary_key=True, nullable=False, unique=True)
+    oid = Column(Integer, Sequence("order_id_seq"), primary_key=True, nullable=False)
+    order_id = Column(String)
     cus_id = Column(String, ForeignKey("customer.cus_id", ondelete="CASCADE"), primary_key=True)
     product_id = Column(String)
     product_name = Column(String)
@@ -106,8 +107,8 @@ class Order(Base):
 class CusOrder(Base):
     __tablename__ = "customerorder"
     cus_order_id = Column(String, primary_key=True, nullable=False, unique=True)
-    order_id = Column(String, ForeignKey("order.order_id", ondelete="CASCADE"), primary_key=True)
-    cus_id = relationship("Order")
+    order_id = Column(String)
+    cus_id = Column(String)
     cus_fname = Column(String)
     delivery_loc = Column(String, nullable=False)
     phone_no = Column(Integer, nullable=False)
@@ -116,14 +117,14 @@ class OrderReport(Base):
     __tablename__ ="orderreport"
     order_report_id = Column(String, Sequence("auto_order"), primary_key=True, nullable=False)
     cus_order_id = Column(String, ForeignKey("customerorder.cus_order_id", ondelete="CASCADE"), primary_key=True)
-    order_id = Column(String, ForeignKey("order.order_id"), primary_key=True)
-    cus_id = relationship("Order")
+    order_id = Column(String)
+    cus_id = Column(String)
     product_id = Column(String)
     product_name = Column(String)
-    o_qty = relationship("Order")
-    order_verified = relationship("Order")
-    total = relationship("Order")
-    created_at = relationship("Order")
+    o_qty = Column(String)
+    order_verified = Column(String)
+    total = Column(String)
+    created_at = Column(String)
 
 class Discount(Base):
     __tablename__ = "discount"
@@ -140,14 +141,14 @@ class Eligible(Base):
 class Onc(Base):
     __tablename__ = "onc"
     onc_id = Column(String, primary_key=True, nullable=False, unique=True)
-    order_id = Column(String, ForeignKey("order.order_id"), primary_key=True)
+    order_id = Column(String)
     cus_id = Column(String, ForeignKey("customer.cus_id", ondelete="CASCADE"), primary_key=True)
     product_id = Column(String)
     product_name = Column(String)
-    o_qty = relationship("Order")
-    order_verified = relationship("Order")
-    total = relationship("Order")
-    created_at = relationship("Order")
+    o_qty = Column(String)
+    order_verified = Column(String)
+    total = Column(String)
+    created_at = Column(String)
 
 class Wishlist(Base):
     __tablename__ ="wishlist"

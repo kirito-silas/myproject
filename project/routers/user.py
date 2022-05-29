@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
@@ -164,4 +164,11 @@ async def updatefromuser(id: str, updatepost: schemas.UserDash, db: Session = De
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"not authorized to perform request actions")
         print("not authroized")
         return {"Unauthorized"}
-#------------------------------- trails underneath---
+
+#------------------------showing personal details----------
+@router.get("/dashboard/")
+async def personaldetails(db: Session = Depends(get_db),current_user: str = Depends(oauth2.get_current_user)):
+
+    product = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id).all()
+    #product = db.query(models.Product).all()
+    return product
