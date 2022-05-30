@@ -13,14 +13,14 @@ router = APIRouter(
     tags=['delivery']
 )
 
-
+A=0
 def total(a):
     global A
     A = a
 
     print("hello ",A)
 
-
+#print(A)
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_delivery(newly_made: schemas.CusOrder, db: Session = Depends(get_db),current_user: str = Depends(oauth2.get_current_user)):
@@ -28,12 +28,14 @@ async def create_delivery(newly_made: schemas.CusOrder, db: Session = Depends(ge
     #print(A)
     print(current_user.cus_id)
     delivery_order_id = random.randomnumber(10)
-    locid = "DEL" + delivery_order_id
+    locid = "DEL-" + delivery_order_id
+    total = A
+    print(A)
 
     customer_name = db.query(models.Product).filter(models.Customer.cus_id == current_user.cus_id)
 
     stmt = models.CusOrder(cus_order_id=locid ,order_id=newly_made.order_id ,cus_id=current_user.cus_id,cus_fname=newly_made.cus_fname,
-                           delivery_loc=newly_made.delivery_loc,phone_no=newly_made.phone_no,total = 100)
+                           delivery_loc=newly_made.delivery_loc,phone_no=newly_made.phone_no,total = total)
     db.add(stmt)
     db.commit()
     db.refresh(stmt)

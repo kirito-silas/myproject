@@ -56,6 +56,7 @@ async def create_order(newly_made: List[schemas.FetchOrder], db: Session = Depen
         db.add(stmt)
         db.commit()
         db.refresh(stmt)
+
     return stmt
 
 
