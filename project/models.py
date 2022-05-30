@@ -68,6 +68,7 @@ class Product(Base):
     brand = Column(String)
     location = Column(String)
     description = Column(String)
+    discount_amt = Column(Integer)
     available = Column(String)
     #sid = Column(Integer, ForeignKey("seller.sid", ondelete="CASCADE"), nullable=False)
     #seller_id = relationship("Seller")
@@ -108,10 +109,12 @@ class CusOrder(Base):
     __tablename__ = "customerorder"
     cus_order_id = Column(String, primary_key=True, nullable=False, unique=True)
     order_id = Column(String)
-    cus_id = Column(String)
+    cus_id = Column(String, ForeignKey("customer.cus_id", ondelete="CASCADE"), primary_key=True)
     cus_fname = Column(String)
     delivery_loc = Column(String, nullable=False)
     phone_no = Column(Integer, nullable=False)
+    total = Column(Integer)
+
 
 class OrderReport(Base):
     __tablename__ ="orderreport"

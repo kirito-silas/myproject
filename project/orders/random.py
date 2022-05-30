@@ -1,10 +1,7 @@
-from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
-from sqlalchemy.orm import Session
-from sqlalchemy import delete, update, insert
+
 from project import models, schemas, utils, oauth2
 from project.database import get_db, database
-from typing import Optional, List
-from project.orders import random
+
 import random
 
 import string
