@@ -61,7 +61,7 @@ class Product(Base):
     #product_id = Column(String, nullable=False, unique=True)
     product_name = Column(String)
     p_qty = Column(Integer)
-    p_price = Column(String)
+    p_price = Column(Integer)
     p_color = Column(String)
     p_size = Column(String)
     category = Column(String)

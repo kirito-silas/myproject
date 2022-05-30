@@ -38,6 +38,7 @@ async def allproduct(db: Session = Depends(get_db), limit: int = 10,
     #print(posti)'''
     product = db.query(models.Product).filter(models.Product.product_name.contains(search), models.Product.available == 'yes', models.Product.p_qty != '0').limit(limit).offset(skip).all()
     #product = db.query(models.Product).all()
+
     return product
 
 

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from pydantic.types import conint
 
 class CreateOTP(BaseModel):
@@ -148,3 +148,20 @@ class Order(BaseModel):
 
 class OrId(BaseModel):
     order_id: str
+#---------------------working
+class Fetch(BaseModel):
+    product_id: str
+    o_qty: str
+#----------------
+class FetchOrder(BaseModel):
+    #cus_id: str
+    #products: List[Fetch]
+    #o_qty: List[str]
+    product_id: str
+    o_qty: str
+
+class ShowOrder(FetchOrder):
+    product_name: str
+
+    class Config:
+        orm_mode = True
