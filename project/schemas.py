@@ -20,7 +20,7 @@ class UserOut(CreateOTP):
 class CreateUsers(CreateOTP):
     cus_fname: str
     password: str
-    cus_id: str
+    #cus_id: str
 
 
 class UserLogin(BaseModel):

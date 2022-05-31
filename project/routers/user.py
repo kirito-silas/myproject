@@ -11,6 +11,7 @@ from starlette.responses import RedirectResponse
 from project.otp import otp, crud, otpUtil, foremail
 import uuid
 from project.database import database
+from project.orders import random
 
 # --------------------
 
@@ -24,7 +25,9 @@ router = APIRouter(
 @router.post("/", status_code=status.HTTP_201_CREATED)  # , response_model=schemas.UserOut)
 async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db)):
     # adding  cus_id in customer
-    stmt = models.Customer(cus_id = request.cus_id, cus_email = request.recipient_id, cus_fname = request.cus_fname)
+    customerid = random.randomnumber(10)
+    cusid = "CUS-" + customerid
+    stmt = models.Customer(cus_id = cusid, cus_email = request.recipient_id, cus_fname = request.cus_fname)
     db.add(stmt)
     db.commit()
     db.refresh(stmt)
@@ -54,7 +57,9 @@ async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db
 
 
 
-        new_user = models.Users(**request.dict())
+        #new_user = models.Users(**request.dict())
+        new_user = models.Users(recipient_id= request.recipient_id , cus_fname = request.cus_fname,password= request.password,cus_id=cusid)
+
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
