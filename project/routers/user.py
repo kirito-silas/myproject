@@ -148,16 +148,18 @@ async def get_user(id: int, db: Session = Depends(get_db)):
 #--------------------------------------dashboard--------
 
 #---adiing details
-@router.put("/dashboard/{id}", response_model=schemas.UserDash)
-async def updatefromuser(id: str, updatepost: schemas.UserDash, db: Session = Depends(get_db),current_user: str = Depends(oauth2.get_current_user)):
+@router.put("/dashboard/", response_model=schemas.UserDash)
+async def updatefromuser( updatepost: schemas.UserDash, db: Session = Depends(get_db),current_user: str = Depends(oauth2.get_current_user)):
     print(current_user.cus_id)
-    print(updatepost.cus_id)
+    #print(updatepost.cus_id)
     if updatepost.cus_id == current_user.cus_id:
-        post_query = db.query(models.Customer).filter(models.Customer.cus_fname == id) #not id but name
+    #if models.Customer.cus_id == current_user.cus_id:
+        post_query = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id) #not id but name
         post = post_query.first()
+        print(post.cus_id)
 
         if post == None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"the id {id} does not exist")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"the id {post.cus_id} does not exist")
         # newly_made = models.Post(**newly_made.dict())
         if post.cus_id != current_user.cus_id:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"not authorized to perform request actions")
@@ -177,3 +179,26 @@ async def personaldetails(db: Session = Depends(get_db),current_user: str = Depe
     product = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id).all()
     #product = db.query(models.Product).all()
     return product
+
+#----------------------------forgot password-------
+@router.put("/forgotpass")  # , response_model=schemas.UserOut)
+async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_db)):
+    #a= request.recipient_id
+    print("hello")
+
+    user = db.query(models.Users).filter(models.Users.recipient_id == request.recipient_id).first()
+    print(user.recipient_id)
+
+    if user:
+        hashed_password = utils.hash(request.password)
+        request.password = hashed_password
+        #print(request.password)
+
+        #user.update(**request.dict(), synchronize_session=False)
+        user.password = request.password
+        db.commit()
+        db.refresh(user)
+        return {"Password changed"}
+    else:
+        return {"User does not already exists!!"}
+

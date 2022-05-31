@@ -192,3 +192,8 @@ class CusOrder(BaseModel):
     cus_fname:str
     delivery_loc: str
     phone_no: str
+
+#----------------------forgot password
+class ForgotPass(BaseModel):
+    recipient_id: EmailStr
+    password: str
