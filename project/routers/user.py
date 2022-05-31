@@ -27,12 +27,12 @@ async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db
     # adding  cus_id in customer
     customerid = random.randomnumber(10)
     cusid = "CUS-" + customerid
-    stmt = models.Customer(cus_id = cusid, cus_email = request.recipient_id, cus_fname = request.cus_fname)
+    stmt = models.Customer(cus_id=cusid, cus_email=request.recipient_id, cus_fname=request.cus_fname)
     db.add(stmt)
     db.commit()
     db.refresh(stmt)
 
-    #db.commit()
+    # db.commit()
 
     # create otp and verify
     user = db.query(models.Users).filter(models.Users.recipient_id == request.recipient_id).first()
@@ -55,17 +55,15 @@ async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db
         hashed_password = utils.hash(request.password)
         request.password = hashed_password
 
-
-
-        #new_user = models.Users(**request.dict())
-        new_user = models.Users(recipient_id= request.recipient_id , cus_fname = request.cus_fname,password= request.password,cus_id=cusid)
+        # new_user = models.Users(**request.dict())
+        new_user = models.Users(recipient_id=request.recipient_id, cus_fname=request.cus_fname,
+                                password=request.password, cus_id=cusid)
 
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
 
         # adding email to customer table ok
-
 
         return {"recipient_id": request.recipient_id,
                 "session_id": session_id,
@@ -131,7 +129,6 @@ async def send_verify(request: schemas.VerifyOTP, db: Session = Depends(get_db))
     a.verified = '0'
     db.commit()
 
-
     return {
         "status_code": status.HTTP_200_OK,
         "detail": "OTP verified successfully"
@@ -145,16 +142,19 @@ async def get_user(id: int, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id {id} does not exists")
     return user
-#--------------------------------------dashboard--------
 
-#---adiing details
+
+# --------------------------------------dashboard--------
+
+# ---adiing details
 @router.put("/dashboard/", response_model=schemas.UserDash)
-async def updatefromuser( updatepost: schemas.UserDash, db: Session = Depends(get_db),current_user: str = Depends(oauth2.get_current_user)):
+async def updatefromuser(updatepost: schemas.UserDash, db: Session = Depends(get_db),
+                         current_user: str = Depends(oauth2.get_current_user)):
     print(current_user.cus_id)
-    #print(updatepost.cus_id)
+    # print(updatepost.cus_id)
     if updatepost.cus_id == current_user.cus_id:
-    #if models.Customer.cus_id == current_user.cus_id:
-        post_query = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id) #not id but name
+        # if models.Customer.cus_id == current_user.cus_id:
+        post_query = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id)  # not id but name
         post = post_query.first()
         print(post.cus_id)
 
@@ -162,25 +162,27 @@ async def updatefromuser( updatepost: schemas.UserDash, db: Session = Depends(ge
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"the id {post.cus_id} does not exist")
         # newly_made = models.Post(**newly_made.dict())
         if post.cus_id != current_user.cus_id:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"not authorized to perform request actions")
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                                detail=f"not authorized to perform request actions")
 
         post_query.update(updatepost.dict(), synchronize_session=False)
         db.commit()
         return post_query.first()
     else:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"not authorized to perform request actions")
-        print("not authroized")
+        print("not authroilzed")
         return {"Unauthorized"}
 
-#------------------------showing personal details----------
-@router.get("/dashboard/")
-async def personaldetails(db: Session = Depends(get_db),current_user: str = Depends(oauth2.get_current_user)):
 
+# ------------------------showing personal details----------
+@router.get("/dashboard/")
+async def personaldetails(db: Session = Depends(get_db), current_user: str = Depends(oauth2.get_current_user)):
     product = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id).all()
-    #product = db.query(models.Product).all()
+    # product = db.query(models.Product).all()
     return product
 
-#----------------------------forgot password-------
+
+# ----------------------------forgot password-------
 @router.put("/forgotpass")
 async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_db)):
     print("hello")
@@ -191,13 +193,12 @@ async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_
     if user:
         hashed_password = utils.hash(request.password)
         request.password = hashed_password
-        #print(request.password)
+        # print(request.password)
 
-        #user.update(**request.dict(), synchronize_session=False)
+        # user.update(**request.dict(), synchronize_session=False)
         user.password = request.password
         db.commit()
         db.refresh(user)
         return {"Password changed"}
     else:
         return {"User does not already exists!!"}
-
