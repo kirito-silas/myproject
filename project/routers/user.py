@@ -64,7 +64,7 @@ async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db
         db.commit()
         db.refresh(new_user)
 
-        # adding email to customer table
+        # adding email to customer table ok
 
 
         return {"recipient_id": request.recipient_id,
