@@ -181,9 +181,8 @@ async def personaldetails(db: Session = Depends(get_db),current_user: str = Depe
     return product
 
 #----------------------------forgot password-------
-@router.put("/forgotpass")  # , response_model=schemas.UserOut)
+@router.put("/forgotpass")
 async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_db)):
-    #a= request.recipient_id
     print("hello")
 
     user = db.query(models.Users).filter(models.Users.recipient_id == request.recipient_id).first()

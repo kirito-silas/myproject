@@ -57,7 +57,7 @@ class Seller(Base):
 class Product(Base):
     __tablename__ = "product"
     pid = Column(Integer, Sequence("product_id_seq"),primary_key=True, nullable=False)
-    product_id = Column(String, nullable=False)
+    product_id = Column(String, nullable=False, unique=True) #if doesnot work remove unique
     #product_id = Column(String, nullable=False, unique=True)
     product_name = Column(String)
     p_qty = Column(Integer)

@@ -7,7 +7,7 @@ from project.config import settings
 from project.otp import routerotp
 from project.database import database
 from project.seller import login, authseller
-from project.productspage import product
+from project.productspage import product,uploadimg
 from project.adminlog import admin,authadmin
 from project.orders import order,customerorder
 
@@ -39,6 +39,8 @@ app.include_router(authadmin.router)
 app.include_router(product.router)
 app.include_router(order.router)
 app.include_router(customerorder.router)
+#---------------uploading img test--
+#app.include_router(uploadimg.router)
 
 @app.on_event('startup')
 async def startup():

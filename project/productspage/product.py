@@ -53,6 +53,7 @@ async def create_product(newly_made: schemas.AddProduct, db: Session = Depends(g
     #print(current_user.product_id)
     print(current_user.seller_id)
     #print(user_id) ,user_id: int= Depends(oauth2.get_current_user())
+    
 
     #newly_made = models.Product(seller_id=current_user.seller_id, **newly_made.dict())
     if newly_made.seller_id == current_user.seller_id:
