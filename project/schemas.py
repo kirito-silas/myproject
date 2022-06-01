@@ -197,3 +197,7 @@ class CusOrder(BaseModel):
 class ForgotPass(BaseModel):
     recipient_id: EmailStr
     password: str
+#---------------------uploaoding picture---
+class UploadPic(BaseModel):
+    user_n_product_id: str
+    pic_id: str

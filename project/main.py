@@ -1,15 +1,25 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from project import models
+#from . import models
 from project.database import engine
+#from .database import engine
 from project.routers import user, auth
+#from .routers import user, auth
 from project.config import settings
+#from .config import settings
 from project.otp import routerotp
+#from .otp import routerotp
 from project.database import database
+#from .database import database
 from project.seller import login, authseller
+#from .seller import login, authseller
 from project.productspage import product,uploadimg
+#from .productspage import product,uploadimg
 from project.adminlog import admin,authadmin
+#from .adminlog import admin,authadmin
 from project.orders import order,customerorder
+#from .orders import order,customerorder
 
 app = FastAPI()
 
@@ -40,7 +50,7 @@ app.include_router(product.router)
 app.include_router(order.router)
 app.include_router(customerorder.router)
 #---------------uploading img test--
-#app.include_router(uploadimg.router)
+app.include_router(uploadimg.router)
 
 @app.on_event('startup')
 async def startup():

@@ -129,17 +129,7 @@ class OrderReport(Base):
     total = Column(String)
     created_at = Column(String)
 
-class Discount(Base):
-    __tablename__ = "discount"
-    discount_id = Column(String, primary_key =True, nullable=False)
-    discount_amt = Column(Integer)
-    expiry_date = Column(Integer)
 
-class Eligible(Base):
-    __tablename__ = "eligible"
-    eli_id = Column(String, primary_key= True, nullable=False)
-    discount_id = Column(String, ForeignKey("discount.discount_id", ondelete="CASCADE"), primary_key=True)
-    cus_id = Column(String, ForeignKey("customer.cus_id", ondelete="CASCADE"), primary_key=True)
 
 class Onc(Base):
     __tablename__ = "onc"
@@ -153,13 +143,10 @@ class Onc(Base):
     total = Column(String)
     created_at = Column(String)
 
-class Wishlist(Base):
-    __tablename__ ="wishlist"
-    wish_id = Column(String, primary_key = True, nullable=False)
-    cus_id = Column(String, ForeignKey("customer.cus_id", ondelete="CASCADE"), primary_key=True)
-    onc_id = Column(String, ForeignKey("onc.onc_id", ondelete="CASCADE"), primary_key=True)
-
-
 
 
 #----------------------------------------------------tries
+class Picture(Base):
+    __tablename__ = "pictures"
+    user_n_product_id = Column(String, primary_key=True, nullable=False, unique=True)
+    pic_id = Column(String, unique=True)

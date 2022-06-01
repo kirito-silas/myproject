@@ -12,7 +12,7 @@ from project.otp import otp, crud, otpUtil, foremail
 import uuid
 from project.database import database
 from project.orders import random
-
+from project.productspage import uploadimg
 # --------------------
 
 router = APIRouter(
@@ -32,7 +32,8 @@ async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db
     db.commit()
     db.refresh(stmt)
 
-    # db.commit()
+    # for profile pic
+    #await uploadimg.create_file(cusid)   --- doesnot work
 
     # create otp and verify
     user = db.query(models.Users).filter(models.Users.recipient_id == request.recipient_id).first()

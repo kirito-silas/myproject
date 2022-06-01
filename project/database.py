@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from project.config import settings
 import databases
+
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
