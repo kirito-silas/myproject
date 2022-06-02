@@ -150,3 +150,9 @@ class Picture(Base):
     __tablename__ = "pictures"
     user_n_product_id = Column(String, primary_key=True, nullable=False, unique=True)
     pic_id = Column(String, unique=True)
+
+class ProductPicture(Base):
+    __tablename__ = "productpicture"
+    id = Column(String, primary_key=True, nullable=False, unique=True)
+    product_id = Column(String)
+    pic_id = Column(String, unique=True)

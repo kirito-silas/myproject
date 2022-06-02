@@ -151,12 +151,13 @@ async def get_user(id: int, db: Session = Depends(get_db)):
 @router.put("/dashboard/", response_model=schemas.UserDash)
 async def updatefromuser(updatepost: schemas.UserDash, db: Session = Depends(get_db),
                          current_user: str = Depends(oauth2.get_current_user)):
-    print(current_user.cus_id)
+    #print(current_user.cus_id)
     # print(updatepost.cus_id)
-    if updatepost.cus_id == current_user.cus_id:
+    #if updatepost.cus_id == current_user.cus_id:
         # if models.Customer.cus_id == current_user.cus_id:
-        post_query = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id)  # not id but name
-        post = post_query.first()
+    post_query = db.query(models.Customer).filter(models.Customer.cus_id == current_user.cus_id)  # not id but name
+    post = post_query.first()
+    if post:
         print(post.cus_id)
 
         if post == None:

@@ -127,7 +127,7 @@ class ShowProduct(BaseModel):
 # ---------------------------
 
 class UserDash(BaseModel):
-    cus_id: str
+    #cus_id: str
     cus_dob: str
     cus_phone: str
     cus_region: str
@@ -201,3 +201,6 @@ class ForgotPass(BaseModel):
 class UploadPic(BaseModel):
     user_n_product_id: str
     pic_id: str
+
+class FetchPic(BaseModel):
+    product_id: str
