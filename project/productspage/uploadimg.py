@@ -81,7 +81,7 @@ async def findpic(id: str, db: Session = Depends(get_db)):
         print(s)
     return{f'project/productspage/productpic/{s}'}
 
-@router.post('/getpictures/selleruser')
+@router.post('/getpictures/sellerpic')
 async def findpic(db: Session = Depends(get_db),current_user: str = Depends(oauth2seller.get_current_user)):
     print(current_user.cus_id)
     picture = db.query(models.Picture).filter(models.Picture.user_n_product_id == current_user.seller_id)

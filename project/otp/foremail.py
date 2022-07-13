@@ -8,12 +8,13 @@ def sendemail(sender: str, otp: str):
     TEXT = otp  # 'Here is a message from python.'
 
     # Gmail Sign In
-    gmail_sender = 'silk94450@gmail.com'
-    gmail_passwd = 'It@03101998'
+    gmail_sender = 'silashkhatri@outlook.com'
+    gmail_passwd = 'IT@03101998'
 
-    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server = smtplib.SMTP('smtp-mail.outlook.com', 587)
     server.ehlo()
     server.starttls()
+    server.ehlo() #later added
     server.login(gmail_sender, gmail_passwd)
 
     BODY = '\r\n'.join(['To: %s' % TO,

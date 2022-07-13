@@ -2,6 +2,7 @@ from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from sqlalchemy import delete, update, insert
 from project import models, schemas, utils
+from project.adminlog import oauth2admin
 from project.database import get_db, database
 
 
@@ -43,3 +44,13 @@ async def verify_admin(request: schemas.VerifyAdmin, db: Session = Depends(get_d
     db.commit()
     print(admin)
     return {"admin verified"}
+
+@router.put("/verifyseller", status_code=status.HTTP_201_CREATED)  # , response_model=schemas.UserOut)
+async def verify_seller(request: schemas.VerifySeller, db: Session = Depends(get_db), current_user: str = Depends(oauth2admin.get_current_user)):
+    print(current_user.admin_id)
+    seller = db.query(models.Seller).filter(models.Seller.seller_id == request.seller_id).first()
+    #if seller:
+    seller.seller_verified = request.seller_verified
+    db.commit()
+    print(seller)
+    return {"seller verified"}

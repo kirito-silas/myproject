@@ -48,7 +48,7 @@ async def create_user(request: schemas.CreateUsers, db: Session = Depends(get_db
         otp_code = otpUtil.random(6)
         session_id = str(uuid.uuid1())
         await crud.save_otp(request, session_id, otp_code)
-        foremail.sendemail(request.recipient_id, otp_code)
+        #foremail.sendemail(request.recipient_id, otp_code)  #------for sending email commented after the terms and conditions were changed on 30th may
 
         # await routerotp.send_otp(user.email, user.email)
 
@@ -185,7 +185,7 @@ async def personaldetails(db: Session = Depends(get_db), current_user: str = Dep
 
 
 # ----------------------------forgot password-------
-@router.put("/forgotpass")
+@router.put("/forgotpass/")
 async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_db)):
     print("hello")
 
@@ -204,3 +204,4 @@ async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_
         return {"Password changed"}
     else:
         return {"User does not already exists!!"}
+

@@ -8,7 +8,7 @@ from project import database, schemas, models, utils, oauth2
 router = APIRouter(tags=['Authentication'])
 
 
-@router.post('/login', response_model=schemas.Token)
+@router.post('/user/login', response_model=schemas.Token)
 async def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     b = db.query(models.Users).filter(models.Users.verified == '1').delete()
     print(b)
@@ -36,3 +36,6 @@ async def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Ses
     access_token = oauth2.create_access_token(data= {"user_id": user.id})
     return {"access_token": access_token, "user_id": f"{user.cus_id}"}
 
+#-------------------loggout-----
+#@router.put("/user/logout")
+#async def modifypassword(request: schemas.ForgotPass, db: Session = Depends(get_db)):

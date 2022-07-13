@@ -108,7 +108,7 @@ async def deletefromid(id: str, db: Session = Depends(get_db), current_user: str
 async def updatefromid(id: str, updatepost: schemas.AddProduct, db: Session = Depends(get_db),current_user: str = Depends(oauth2seller.get_current_user)):
 
     if updatepost.seller_id == current_user.seller_id:
-        post_query = db.query(models.Product).filter(models.Product.product_name == id) #not id but name
+        post_query = db.query(models.Product).filter(models.Product.product_id == id) #not id but name
         post = post_query.first()
 
         if post == None:
