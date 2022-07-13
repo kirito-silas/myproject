@@ -88,7 +88,7 @@ async def retrivefromid(id: str, db: Session = Depends(get_db)):
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def deletefromid(id: str, db: Session = Depends(get_db), current_user: str = Depends(oauth2seller.get_current_user)):
-    '''cursor.execute("""DELETE FROM post WHERE id = %s returning *""", (str(id)))
+    '''cursor.execute("""DELET E FROM post WHERE id = %s returning *""", (str(id)))
     deletefromid = cursor.fetchone()
     conn.commit()'''
     delte_query = db.query(models.Product).filter(models.Product.product_id == id)
