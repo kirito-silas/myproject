@@ -34,7 +34,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-#app.include_router(googleapi.router)
+#app.include_router(googleapi.router)..
 app.include_router(routerotp.router) #for otp
 
 app.include_router(user.router)
