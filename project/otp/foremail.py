@@ -9,7 +9,7 @@ def sendemail(sender: str, otp: str):
 
     # Gmail Sign In
     gmail_sender = 'silashkhatri@outlook.com'
-    gmail_passwd = 'IT@03101998'
+    gmail_passwd = '******'
 
     server = smtplib.SMTP('smtp-mail.outlook.com', 587)
     server.ehlo()
